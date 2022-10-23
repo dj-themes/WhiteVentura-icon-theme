@@ -12,9 +12,9 @@ fi
 
 SRC_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-THEME_NAME=WhiteSur
+THEME_NAME=WhiteVentura
 COLOR_VARIANTS=('' '-dark')
-THEME_VARIANTS=('' '-purple' '-pink' '-red' '-orange' '-yellow' '-green' '-grey' '-nord')
+THEME_VARIANTS=('')
 
 usage() {
 cat << EOF
@@ -23,9 +23,6 @@ cat << EOF
   OPTIONS:
     -d, --dest DIR          Specify destination directory (Default: $DEST_DIR)
     -n, --name NAME         Specify theme name (Default: $THEME_NAME)
-    -t, --theme VARIANT     Specify theme color variant(s) [default|purple|pink|red|orange|yellow|green|grey|nord|all] (Default: blue)
-    -a, --alternative       Install alternative icons for software center and file-manager
-    -b, --bold              Install bold panel icons version
     --black                 Black panel icons version
     -h, --help              Show help
 EOF
@@ -153,16 +150,6 @@ while [[ "$#" -gt 0 ]]; do
       name="${2}"
       shift 2
       ;;
-    -a|--alternative)
-      alternative='true'
-      echo "Installing 'alternative' version..."
-      shift
-      ;;
-    -b|--bold)
-      bold='true'
-      echo "Installing 'bold' version..."
-      shift
-      ;;
     --black)
       black='true'
       echo "Installing 'black on panel' version..."
@@ -174,42 +161,6 @@ while [[ "$#" -gt 0 ]]; do
         case "${theme}" in
           default)
             themes+=("${THEME_VARIANTS[0]}")
-            shift
-            ;;
-          purple)
-            themes+=("${THEME_VARIANTS[1]}")
-            shift
-            ;;
-          pink)
-            themes+=("${THEME_VARIANTS[2]}")
-            shift
-            ;;
-          red)
-            themes+=("${THEME_VARIANTS[3]}")
-            shift
-            ;;
-          orange)
-            themes+=("${THEME_VARIANTS[4]}")
-            shift
-            ;;
-          yellow)
-            themes+=("${THEME_VARIANTS[5]}")
-            shift
-            ;;
-          green)
-            themes+=("${THEME_VARIANTS[6]}")
-            shift
-            ;;
-          grey)
-            themes+=("${THEME_VARIANTS[7]}")
-            shift
-            ;;
-          nord)
-            themes+=("${THEME_VARIANTS[8]}")
-            shift
-            ;;
-          all)
-            themes+=("${THEME_VARIANTS[@]}")
             shift
             ;;
           -*|--*)
@@ -235,6 +186,8 @@ while [[ "$#" -gt 0 ]]; do
       ;;
   esac
 done
+
+bold='true'
 
 if [[ "${#themes[@]}" -eq 0 ]] ; then
   themes=("${THEME_VARIANTS[0]}")
